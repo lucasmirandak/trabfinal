@@ -29,7 +29,7 @@
     }
 
     th, td {
-      border: 1px solid #ddd;
+      border: 1px solid #000000;
       padding: 8px;
       text-align: left;
     }
@@ -127,69 +127,150 @@
   </table>
 
   <script>
-    // Funções para adicionar novos registros
-    function adicionarFilme() {
-      const titulo = document.getElementById('tituloFilme').value;
-      const ano = document.getElementById('anoFilme').value;
-      const genero = document.getElementById('generoFilme').value;
-      const duracao = document.getElementById('duracaoFilme').value;
-      const sinopse = document.getElementById('sinopseFilme').value;
 
-      if (titulo && ano && genero && duracao && sinopse) {
-        const tabela = document.getElementById('tabelaFilmes').getElementsByTagName('tbody')[0];
-        const novaLinha = tabela.insertRow();
-        novaLinha.innerHTML = `<td>${titulo}</td><td>${ano}</td><td>${genero}</td><td>${duracao}</td><td>${sinopse}</td>`;
+  document.addEventListener('DOMContentLoaded', function() {
+    carregarFilmes();
+    carregarDiretores();
+    carregarProdutoras();
+  });
 
-        // Limpar campos após adicionar
-        document.getElementById('tituloFilme').value = '';
-        document.getElementById('anoFilme').value = '';
-        document.getElementById('generoFilme').value = '';
-        document.getElementById('duracaoFilme').value = '';
-        document.getElementById('sinopseFilme').value = '';
-      }
+  // Função para carregar filmes do servidor
+  async function carregarFilmes() {
+    const response = await fetch('/filmes');
+    const filmes = await response.json();
+    const tabela = document.getElementById('tabelaFilmes').getElementsByTagName('tbody')[0];
+    
+    // Limpar a tabela antes de carregar os dados
+    tabela.innerHTML = '';
+
+    filmes.forEach(filme => {
+      const novaLinha = tabela.insertRow();
+      novaLinha.innerHTML = `<td>${filme.titulo}</td><td>${filme.ano}</td><td>${filme.genero}</td><td>${filme.duracao}</td><td>${filme.sinopse}</td>`;
+    });
+  }
+
+  // Função para carregar diretores do servidor
+  async function carregarDiretores() {
+    const response = await fetch('/diretores');
+    const diretores = await response.json();
+    const tabela = document.getElementById('tabelaDiretores').getElementsByTagName('tbody')[0];
+    
+    // Limpar a tabela antes de carregar os dados
+    tabela.innerHTML = '';
+
+    diretores.forEach(diretor => {
+      const novaLinha = tabela.insertRow();
+      novaLinha.innerHTML = `<td>${diretor.nome}</td><td>${diretor.dataNascimento}</td><td>${diretor.nacionalidade}</td><td>${diretor.premiacoes}</td><td>${diretor.biografia}</td>`;
+    });
+  }
+
+  // Função para carregar produtoras do servidor
+  async function carregarProdutoras() {
+    const response = await fetch('/produtoras');
+    const produtoras = await response.json();
+    const tabela = document.getElementById('tabelaProdutoras').getElementsByTagName('tbody')[0];
+    
+    // Limpar a tabela antes de carregar os dados
+    tabela.innerHTML = '';
+
+    produtoras.forEach(produtora => {
+      const novaLinha = tabela.insertRow();
+      novaLinha.innerHTML = `<td>${produtora.nome}</td><td>${produtora.fundacao}</td><td>${produtora.paisOrigem}</td><td>${produtora.site}</td><td>${produtora.descricao}</td>`;
+    });
+  }
+
+  async function adicionarFilme() {
+    const titulo = document.getElementById('tituloFilme').value;
+    const ano = document.getElementById('anoFilme').value;
+    const genero = document.getElementById('generoFilme').value;
+    const duracao = document.getElementById('duracaoFilme').value;
+    const sinopse = document.getElementById('sinopseFilme').value;
+
+    if (titulo && ano && genero && duracao && sinopse) {
+      // Enviar dados para o servidor
+      const response = await fetch('/filmes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ titulo, ano, genero, duracao, sinopse })
+      });
+
+      const filme = await response.json();
+
+      // Adicionar o filme na tabela
+      const tabela = document.getElementById('tabelaFilmes').getElementsByTagName('tbody')[0];
+      const novaLinha = tabela.insertRow();
+      novaLinha.innerHTML = `<td>${filme.titulo}</td><td>${filme.ano}</td><td>${filme.genero}</td><td>${filme.duracao}</td><td>${filme.sinopse}</td>`;
+
+      // Limpar campos após adicionar
+      document.getElementById('tituloFilme').value = '';
+      document.getElementById('anoFilme').value = '';
+      document.getElementById('generoFilme').value = '';
+      document.getElementById('duracaoFilme').value = '';
+      document.getElementById('sinopseFilme').value = '';
     }
+  }
 
-    function adicionarDiretor() {
-      const nome = document.getElementById('nomeDiretor').value;
-      const dataNascimento = document.getElementById('dataNascimentoDiretor').value;
-      const nacionalidade = document.getElementById('nacionalidadeDiretor').value;
-      const premiacoes = document.getElementById('premiacoesDiretor').value;
-      const biografia = document.getElementById('biografiaDiretor').value;
+  async function adicionarDiretor() {
+    const nome = document.getElementById('nomeDiretor').value;
+    const dataNascimento = document.getElementById('dataNascimentoDiretor').value;
+    const nacionalidade = document.getElementById('nacionalidadeDiretor').value;
+    const premiacoes = document.getElementById('premiacoesDiretor').value;
+    const biografia = document.getElementById('biografiaDiretor').value;
 
-      if (nome && dataNascimento && nacionalidade && premiacoes && biografia) {
-        const tabela = document.getElementById('tabelaDiretores').getElementsByTagName('tbody')[0];
-        const novaLinha = tabela.insertRow();
-        novaLinha.innerHTML = `<td>${nome}</td><td>${dataNascimento}</td><td>${nacionalidade}</td><td>${premiacoes}</td><td>${biografia}</td>`;
+    if (nome && dataNascimento && nacionalidade && premiacoes && biografia) {
+      // Enviar dados para o servidor
+      const response = await fetch('/diretores', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, dataNascimento, nacionalidade, premiacoes, biografia })
+      });
 
-        // Limpar campos após adicionar
-        document.getElementById('nomeDiretor').value = '';
-        document.getElementById('dataNascimentoDiretor').value = '';
-        document.getElementById('nacionalidadeDiretor').value = '';
-        document.getElementById('premiacoesDiretor').value = '';
-        document.getElementById('biografiaDiretor').value = '';
-      }
+      const diretor = await response.json();
+
+      // Adicionar o diretor na tabela
+      const tabela = document.getElementById('tabelaDiretores').getElementsByTagName('tbody')[0];
+      const novaLinha = tabela.insertRow();
+      novaLinha.innerHTML = `<td>${diretor.nome}</td><td>${diretor.dataNascimento}</td><td>${diretor.nacionalidade}</td><td>${diretor.premiacoes}</td><td>${diretor.biografia}</td>`;
+
+      // Limpar campos após adicionar
+      document.getElementById('nomeDiretor').value = '';
+      document.getElementById('dataNascimentoDiretor').value = '';
+      document.getElementById('nacionalidadeDiretor').value = '';
+      document.getElementById('premiacoesDiretor').value = '';
+      document.getElementById('biografiaDiretor').value = '';
     }
+  }
 
-    function adicionarProdutora() {
-      const nome = document.getElementById('nomeProdutora').value;
-      const fundacao = document.getElementById('fundacaoProdutora').value;
-      const paisOrigem = document.getElementById('paisOrigemProdutora').value;
-      const site = document.getElementById('siteProdutora').value;
-      const descricao = document.getElementById('descricaoProdutora').value;
+  async function adicionarProdutora() {
+    const nome = document.getElementById('nomeProdutora').value;
+    const fundacao = document.getElementById('fundacaoProdutora').value;
+    const paisOrigem = document.getElementById('paisOrigemProdutora').value;
+    const site = document.getElementById('siteProdutora').value;
+    const descricao = document.getElementById('descricaoProdutora').value;
 
-      if (nome && fundacao && paisOrigem && site && descricao) {
-        const tabela = document.getElementById('tabelaProdutoras').getElementsByTagName('tbody')[0];
-        const novaLinha = tabela.insertRow();
-        novaLinha.innerHTML = `<td>${nome}</td><td>${fundacao}</td><td>${paisOrigem}</td><td>${site}</td><td>${descricao}</td>`;
+    if (nome && fundacao && paisOrigem && site && descricao) {
+      // Enviar dados para o servidor
+      const response = await fetch('/produtoras', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, fundacao, paisOrigem, site, descricao })
+      });
 
-        // Limpar campos após adicionar
-        document.getElementById('nomeProdutora').value = '';
-        document.getElementById('fundacaoProdutora').value = '';
-        document.getElementById('paisOrigemProdutora').value = '';
-        document.getElementById('siteProdutora').value = '';
-        document.getElementById('descricaoProdutora').value = '';
-      }
+      const produtora = await response.json();
+
+      // Adicionar a produtora na tabela
+      const tabela = document.getElementById('tabelaProdutoras').getElementsByTagName('tbody')[0];
+      const novaLinha = tabela.insertRow();
+      novaLinha.innerHTML = `<td>${produtora.nome}</td><td>${produtora.fundacao}</td><td>${produtora.paisOrigem}</td><td>${produtora.site}</td><td>${produtora.descricao}</td>`;
+
+      // Limpar campos após adicionar
+      document.getElementById('nomeProdutora').value = '';
+      document.getElementById('fundacaoProdutora').value = '';
+      document.getElementById('paisOrigemProdutora').value = '';
+      document.getElementById('siteProdutora').value = '';
+      document.getElementById('descricaoProdutora').value = '';
     }
+  }
   </script>
 </body>
 </html>

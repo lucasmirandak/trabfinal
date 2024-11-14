@@ -66,3 +66,74 @@ app.delete('/users/:id', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on port ${port}`)
 })
+
+// Código anterior permanece...
+
+// Endpoint para adicionar um filme
+app.post('/filmes', async (req, res) => {
+  const db = await connect();
+  const { titulo, ano, genero, duracao, sinopse } = req.body;
+  try {
+    const result = await db.run(
+      'INSERT INTO filmes (titulo, ano, genero, duracao, sinopse) VALUES (?, ?, ?, ?, ?)',
+      [titulo, ano, genero, duracao, sinopse]
+    );
+    const filme = await db.get('SELECT * FROM filmes WHERE id = ?', [result.lastID]);
+    res.json(filme);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao salvar o filme' });
+  }
+});
+
+// Endpoint para adicionar um diretor
+app.post('/diretores', async (req, res) => {
+  const db = await connect();
+  const { nome, dataNascimento, nacionalidade, premiacoes, biografia } = req.body;
+  try {
+    const result = await db.run(
+      'INSERT INTO diretores (nome, dataNascimento, nacionalidade, premiacoes, biografia) VALUES (?, ?, ?, ?, ?)',
+      [nome, dataNascimento, nacionalidade, premiacoes, biografia]
+    );
+    const diretor = await db.get('SELECT * FROM diretores WHERE id = ?', [result.lastID]);
+    res.json(diretor);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao salvar o diretor' });
+  }
+});
+
+// Endpoint para adicionar uma produtora
+app.post('/produtoras', async (req, res) => {
+  const db = await connect();
+  const { nome, fundacao, paisOrigem, site, descricao } = req.body;
+  try {
+    const result = await db.run(
+      'INSERT INTO produtoras (nome, fundacao, paisOrigem, site, descricao) VALUES (?, ?, ?, ?, ?)',
+      [nome, fundacao, paisOrigem, site, descricao]
+    );
+    const produtora = await db.get('SELECT * FROM produtoras WHERE id = ?', [result.lastID]);
+    res.json(produtora);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao salvar a produtora' });
+  }
+});
+
+// Endpoint para buscar todos os filmes
+app.get('/filmes', async (req, res) => {
+  const db = await connect();
+  const filmes = await db.all('SELECT * FROM filmes');
+  res.json(filmes);
+});
+
+// Endpoint para buscar todos os diretores
+app.get('/diretores', async (req, res) => {
+  const db = await connect();
+  const diretores = await db.all('SELECT * FROM diretores');
+  res.json(diretores);
+});
+
+// Endpoint para buscar todas as produtoras
+app.get('/produtoras', async (req, res) => {
+  const db = await connect();
+  const produtoras = await db.all('SELECT * FROM produtoras');
+  res.json(produtoras);
+});
