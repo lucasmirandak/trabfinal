@@ -1,123 +1,86 @@
-/*
-
-
-
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-
+/* Estilo global */
 body {
-    background-color: #f1f3f8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+    margin: 0;
+    background-color: #f0f8ff;
+    color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    padding: 20px;
-    color: #333;
-}
-
-form {
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    min-height: 100vh;
+  }
+  
+  /* Estilo do formulário */
+  form {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
     width: 100%;
-    max-width: 450px;
-}
-
-form h1 {
-    text-align: center;
-    color: #444;
-    font-size: 24px;
-    margin-bottom: 30px;
-    font-weight: 600;
-}
-
-form div {
+  }
+  
+  /* Estilo dos campos do formulário */
+  div {
     margin-bottom: 20px;
-}
-
-label {
-    font-size: 14px;
-    font-weight: 500;
-    color: #666;
-    margin-bottom: 8px;
+  }
+  
+  label {
     display: block;
-}
-
-input {
-    width: 100%;
-    padding: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    font-weight: bold;
+    color: #20b2aa;
+    margin-bottom: 8px;
+  }
+  
+  input {
+    width: calc(100% - 24px);
+    padding: 12px;
     font-size: 16px;
-    color: #333;
-    background-color: #fafafa;
-    transition: all 0.3s ease-in-out;
-}
-
-input:focus {
-    border-color: #007BFF;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  input:focus {
+    border-color: #ff4500;
     outline: none;
-    background-color: #fff;
-}
-
-
-button {
-    padding: 14px;
-    font-size: 16px;
-    font-weight: 500;
+    box-shadow: 0 0 8px rgba(255, 69, 0, 0.3);
+  }
+  
+  /* Estilo dos botões */
+  button {
+    background-color: #ff69b4;
+    color: white;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    display: inline-block;
-    text-align: center;
-    width: 48%; 
-}
-
-
-#btCadastro {
-    background-color: #007BFF;
-    color: white;
-    margin-right: 4%;
-}
-
-#btVoltar {
-    background-color: #f44336;
-    color: white;
-}
-
-button:hover {
-    opacity: 0.9;
-}
-
-button:focus {
-    outline: none;
-    opacity: 1;
-}
-
-form div:last-child {
-    display: flex;
-    justify-content: space-between;
-}
-
-@media (max-width: 480px) {
-    form {
-        padding: 20px;
-    }
-
-    button {
-        width: 100%;
-        margin-top: 10px;
-    }
-
-    #btCadastro {
-        margin-right: 0;
-    }
-}
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  
+  button:hover {
+    background-color: #ff1493;
+    transform: scale(1.05);
+  }
+  
+  button:active {
+    background-color: #c71585;
+  }
+  
+  #btVoltar {
+    background-color: #6a5acd;
+  }
+  
+  #btVoltar:hover {
+    background-color: #483d8b;
+  }
+  
+  #btVoltar:active {
+    background-color: #2e2c76;
+  }
+  
