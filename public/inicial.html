@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="inicial.css">
+
+
+  <title>Cadastro de Filmes, Diretores e Produtoras</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      color: #333;
+    }
+
+    input, button {
+      margin: 5px 0;
+      padding: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f4f4f4;
+    }
+  </style>
+</head>
+<body>
+  <h1>Cadastro de Informações</h1>
+
+  <!-- Formulário de Cadastro de Filme -->
+  <div>
+    <h2>Cadastrar Filme</h2>
+    <input type="text" id="tituloFilme" placeholder="Título">
+    <input type="number" id="anoFilme" placeholder="Ano de Lançamento">
+    <input type="text" id="generoFilme" placeholder="Gênero">
+    <input type="number" id="duracaoFilme" placeholder="Duração (minutos)">
+    <input type="text" id="sinopseFilme" placeholder="Sinopse">
+    <button onclick="adicionarFilme()">Adicionar Filme</button>
+  </div>
+
+  <!-- Tabela de Filmes -->
+  <h3>Filmes Cadastrados</h3>
+  <table id="tabelaFilmes">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Ano de Lançamento</th>
+        <th>Gênero</th>
+        <th>Duração</th>
+        <th>Sinopse</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Filmes cadastrados aparecerão aqui -->
+    </tbody>
+  </table>
+
+  <!-- Formulário de Cadastro de Diretor -->
+  <div>
+    <h2>Cadastrar Diretor</h2>
+    <input type="text" id="nomeDiretor" placeholder="Nome">
+    <input type="date" id="dataNascimentoDiretor" placeholder="Data de Nascimento">
+    <input type="text" id="nacionalidadeDiretor" placeholder="Nacionalidade">
+    <input type="text" id="premiacoesDiretor" placeholder="Premiações">
+    <input type="text" id="biografiaDiretor" placeholder="Biografia">
+    <button onclick="adicionarDiretor()">Adicionar Diretor</button>
+  </div>
+
+  <!-- Tabela de Diretores -->
+  <h3>Diretores Cadastrados</h3>
+  <table id="tabelaDiretores">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Data de Nascimento</th>
+        <th>Nacionalidade</th>
+        <th>Premiações</th>
+        <th>Biografia</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Diretores cadastrados aparecerão aqui -->
+    </tbody>
+  </table>
+
+  <!-- Formulário de Cadastro de Produtora -->
+  <div>
+    <h2>Cadastrar Produtora</h2>
+    <input type="text" id="nomeProdutora" placeholder="Nome">
+    <input type="date" id="fundacaoProdutora" placeholder="Data de Fundação">
+    <input type="text" id="paisOrigemProdutora" placeholder="País de Origem">
+    <input type="text" id="siteProdutora" placeholder="Site">
+    <input type="text" id="descricaoProdutora" placeholder="Descrição">
+    <button onclick="adicionarProdutora()">Adicionar Produtora</button>
+  </div>
+
+  <!-- Tabela de Produtoras -->
+  <h3>Produtoras Cadastradas</h3>
+  <table id="tabelaProdutoras">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Data de Fundação</th>
+        <th>País de Origem</th>
+        <th>Site</th>
+        <th>Descrição</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Produtoras cadastradas aparecerão aqui -->
+    </tbody>
+  </table>
+
+  <script>
+    // Funções para adicionar novos registros
+    function adicionarFilme() {
+      const titulo = document.getElementById('tituloFilme').value;
+      const ano = document.getElementById('anoFilme').value;
+      const genero = document.getElementById('generoFilme').value;
+      const duracao = document.getElementById('duracaoFilme').value;
+      const sinopse = document.getElementById('sinopseFilme').value;
+
+      if (titulo && ano && genero && duracao && sinopse) {
+        const tabela = document.getElementById('tabelaFilmes').getElementsByTagName('tbody')[0];
+        const novaLinha = tabela.insertRow();
+        novaLinha.innerHTML = `<td>${titulo}</td><td>${ano}</td><td>${genero}</td><td>${duracao}</td><td>${sinopse}</td>`;
+
+        // Limpar campos após adicionar
+        document.getElementById('tituloFilme').value = '';
+        document.getElementById('anoFilme').value = '';
+        document.getElementById('generoFilme').value = '';
+        document.getElementById('duracaoFilme').value = '';
+        document.getElementById('sinopseFilme').value = '';
+      }
+    }
+
+    function adicionarDiretor() {
+      const nome = document.getElementById('nomeDiretor').value;
+      const dataNascimento = document.getElementById('dataNascimentoDiretor').value;
+      const nacionalidade = document.getElementById('nacionalidadeDiretor').value;
+      const premiacoes = document.getElementById('premiacoesDiretor').value;
+      const biografia = document.getElementById('biografiaDiretor').value;
+
+      if (nome && dataNascimento && nacionalidade && premiacoes && biografia) {
+        const tabela = document.getElementById('tabelaDiretores').getElementsByTagName('tbody')[0];
+        const novaLinha = tabela.insertRow();
+        novaLinha.innerHTML = `<td>${nome}</td><td>${dataNascimento}</td><td>${nacionalidade}</td><td>${premiacoes}</td><td>${biografia}</td>`;
+
+        // Limpar campos após adicionar
+        document.getElementById('nomeDiretor').value = '';
+        document.getElementById('dataNascimentoDiretor').value = '';
+        document.getElementById('nacionalidadeDiretor').value = '';
+        document.getElementById('premiacoesDiretor').value = '';
+        document.getElementById('biografiaDiretor').value = '';
+      }
+    }
+
+    function adicionarProdutora() {
+      const nome = document.getElementById('nomeProdutora').value;
+      const fundacao = document.getElementById('fundacaoProdutora').value;
+      const paisOrigem = document.getElementById('paisOrigemProdutora').value;
+      const site = document.getElementById('siteProdutora').value;
+      const descricao = document.getElementById('descricaoProdutora').value;
+
+      if (nome && fundacao && paisOrigem && site && descricao) {
+        const tabela = document.getElementById('tabelaProdutoras').getElementsByTagName('tbody')[0];
+        const novaLinha = tabela.insertRow();
+        novaLinha.innerHTML = `<td>${nome}</td><td>${fundacao}</td><td>${paisOrigem}</td><td>${site}</td><td>${descricao}</td>`;
+
+        // Limpar campos após adicionar
+        document.getElementById('nomeProdutora').value = '';
+        document.getElementById('fundacaoProdutora').value = '';
+        document.getElementById('paisOrigemProdutora').value = '';
+        document.getElementById('siteProdutora').value = '';
+        document.getElementById('descricaoProdutora').value = '';
+      }
+    }
+  </script>
+</body>
+</html>

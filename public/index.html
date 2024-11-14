@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' type='text/css' media='screen' href='index.css'>
+    <title>Login</title>
+</head>
+<body>
+    
+    <form>
+        <div>
+            <label>Login</label>
+            <input name="login">
+        </div>
+        <div>
+            <label>Senha</label>
+            <input name="senha">
+        </div>
+        <div>
+            <button id="btEntrar">
+                Entrar
+            </button>
+            <button id="btCadastrar">
+                Cadastrar
+            </button>
+        </div>
+    </form>
+    <script>
+        const form = document.querySelector("form")
+        const btCadastar = document.querySelector("#btCadastrar")
+
+        form.addEventListener("submit", async event => {
+            event.preventDefault()
+            const method = 'POST'
+            const url = '/login'
+            const headers = { 'Content-Type': 'application/json' }
+            const login = form.login.value
+            const senha = form.senha.value
+            const body = JSON.stringify({ login, senha  })
+            const response = await fetch(url, { method, headers, body })
+            if (!response.ok)
+                return alert('Error:', response.statusText) //colocar o erro 
+            const responseData = await response.json()
+            localStorage.setItem("token", responseData.token)
+            location.href = "inicial.html" 
+        })
+
+        btCadastar.addEventListener("click", () => {
+            window.location.href = "cadastrar.html"
+        })
+    </script>
+</body>
+</html>
